@@ -29,11 +29,12 @@
   <!--/ Layout Content -->
 
   {{-- remove while creating package --}}
+  @if(!isset($withoutCommonMaster))
   <div class="buy-now">
-    <a href="{{config('variables.productPage')}}" target="_blank" class="btn btn-danger btn-buy-now">Upgrade To Pro</a>
+    <a href="{{ url('/pages/checkout') }}" class="btn btn-danger btn-buy-now">Checkout</a>
   </div>
   {{-- remove while creating package end --}}
-
+  @endif
   <!-- Include Scripts -->
   @include('layouts/sections/scripts')
 
