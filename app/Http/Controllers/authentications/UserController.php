@@ -4,7 +4,6 @@ namespace App\Http\Controllers\authentications;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,8 @@ class UserController extends Controller
      */
     public function __construct()
     {
-
+        $this->middleware('guest', ['only' => ['create','store']]);
+        $this->middleware('auth', ['only' => ['update', 'destroy']]);
     }
 
 
@@ -47,19 +47,17 @@ class UserController extends Controller
         $user->save();
 
         Auth::login($user);
-
-        return response()->json('Created');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit()
     {
-        return view('content.pages.pages-account-settings-account');
+        $user = Auth::user();
+        return view('content.pages.pages-account-settings-account', ['user' => $user]);
     }
 
     /**
@@ -70,7 +68,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|max:50',
+            'last_name' => 'required|max:50',
+            'email' => 'required|email',
+        ]);
+     
+        $user->update([
+            'name' => $request->name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+        ]);
     }
 
     /**

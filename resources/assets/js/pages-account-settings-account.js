@@ -4,26 +4,61 @@
 
 'use strict';
 
-document.addEventListener('DOMContentLoaded', function (e) {
-  (function () {
-    const deactivateAcc = document.querySelector('#formAccountDeactivation');
 
-    // Update/reset user image of account page
-    let accountUserImage = document.getElementById('uploadedAvatar');
-    const fileInput = document.querySelector('.account-file-input'),
-      resetFileInput = document.querySelector('.account-image-reset');
+const user_update = document.querySelector('#user_update');
+const user_logout = document.querySelector('#logout');
 
-    if (accountUserImage) {
-      const resetImage = accountUserImage.src;
-      fileInput.onchange = () => {
-        if (fileInput.files[0]) {
-          accountUserImage.src = window.URL.createObjectURL(fileInput.files[0]);
-        }
-      };
-      resetFileInput.onclick = () => {
-        fileInput.value = '';
-        accountUserImage.src = resetImage;
-      };
+
+const setHeader = function(xhr) {
+  xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+};
+
+
+const reloadPage = function(response) {
+  window.location.reload()
+};
+
+
+user_update.addEventListener('click', (e) => {
+  e.preventDefault();
+  const email = document.querySelector('#email').value;
+  const first_name = document.querySelector('#name').value;
+  const last_name = document.querySelector('#last_name').value;
+  
+  const formData = {
+      'name': first_name,
+      last_name,
+      email,
+  };
+
+
+  console.log(formData)
+  $.ajax({
+    url: '/user/' + user_update.dataset.indexNumber,
+    type: 'PUT',
+    data: formData,
+    beforeSend: setHeader,
+    success: reloadPage,
+    error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
     }
-  })();
-});
+  });
+
+})
+
+
+user_logout.addEventListener('click', (e) => {
+
+  $.ajax({
+    url: '/auth/logout',
+    type: 'POST',
+    beforeSend: setHeader,
+    success: reloadPage,
+    error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
+    }
+  });
+
+})
+
+

@@ -19,13 +19,16 @@ $controller_path = 'App\Http\Controllers';
 
 Route::get('/', function () {
     return redirect()->route('auth.create');
-});
-Route::resource('auth', $controller_path . '\authentications\AuthController')->except([
-    'index', 'show', 'update'
-]);
+})->middleware('guest');
+
+Route::get('/auth/login', $controller_path . '\authentications\AuthController@create')->middleware('guest')->name('auth.create');
+Route::post('/auth', $controller_path . '\authentications\AuthController@store')->middleware('guest')->name('auth.store');
+Route::post('/auth/logout', $controller_path . '\authentications\AuthController@destroy' )->middleware('auth')->name('auth.destroy');
 
 Route::get('/checkout', $controller_path . '\pages\CheckoutController@index')->middleware('auth')->name('pages-checkout');
 
 Route::resource('user', $controller_path . '\authentications\UserController')->except([
-    'index', 'show'
+    'index', 'show', 'edit', 'destroy'
 ]);
+
+Route::get('/profile', $controller_path . '\authentications\UserController@edit')->middleware('auth')->name('user.edit');

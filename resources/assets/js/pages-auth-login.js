@@ -1,26 +1,23 @@
 /**
- * User Register
+ * User Login
  */
 
 'use strict';
 
+
 document.getElementById("formUserCreate").addEventListener('click', (e) => {
     e.preventDefault();
  
-    const name = document.querySelector('#name').value;
-    const last_name = document.querySelector('#last_name').value;
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
    
     const formData = {
-        name,
-        last_name,
         email,
         password
     };
-
+   
     $.ajax({
-        url: '/user',
+        url: '/auth',
         type: 'POST',
         data: formData,
         beforeSend: function(xhr) {

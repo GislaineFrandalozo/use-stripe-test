@@ -4,11 +4,13 @@ namespace App\Http\Controllers\authentications;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     /**
-     * Show the form for creating a new resource.
+     * Show the form for user login.
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,23 +20,32 @@ class AuthController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * User login
      *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+
+        $email = $request->email;
+        $password = $request->password;
+
+        $auth = Auth::guard('web')->attempt(['email' => $email, 'password' => $password]);
+        
+        if(!$auth){
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
+     *  User Logout 
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        Auth::logout();
     }
 }
