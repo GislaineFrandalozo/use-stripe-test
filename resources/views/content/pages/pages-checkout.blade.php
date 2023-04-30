@@ -3,6 +3,8 @@ $isMenu = false;
 $navbarHideToggle = false;
 $isNavbar = false;
 $isFooter = false;
+
+$route = route('user.edit', 1);
 @endphp
 
 @extends('layouts/contentNavbarLayout')
@@ -65,7 +67,7 @@ $isFooter = false;
             </div>
           <div class="mt-2">
             <button type="submit" class="btn btn-primary me-2">Save changes</button>
-            <a href="{{ url('/pages/account-settings-account') }}" class="btn btn-outline-secondary">Cancel</a> 
+            <a href="{{ $route }}" class="btn btn-outline-secondary">Cancel</a> 
           </div>
         </form>
       </div>

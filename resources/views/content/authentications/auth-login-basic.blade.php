@@ -65,7 +65,7 @@ $withoutCommonMaster = true;
 
           <p class="text-center">
             <span>New on our platform?</span>
-            <a href="{{url('/register')}}">
+            <a href="{{route('user.create')}}">
               <span>Create an account</span>
             </a>
           </p>
