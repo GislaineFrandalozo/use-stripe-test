@@ -20,7 +20,7 @@ class PlanSeeder extends Seeder
             'slug' => 'plan-test', 
             'stripe_plan' => 'price_1N2nVaFWcz9ZHeiFURtqH6sE', 
             'price' => 8, 
-            'description' => 'First plan is test'
+            'description' => 'First plan'
         ]);
     }
 }
