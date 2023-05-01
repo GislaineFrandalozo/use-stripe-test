@@ -8,6 +8,13 @@
 const user_update = document.querySelector('#user_update');
 const user_logout = document.querySelector('#logout');
 
+const elements = stripe.elements();
+const cardElement = elements.create('card');
+
+const clientSecret = cardButton.dataset.secret;
+const clientFullName = cardButton.dataset.fullName;
+
+cardElement.mount('#card-element');
 
 const setHeader = function(xhr) {
   xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
@@ -61,4 +68,43 @@ user_logout.addEventListener('click', (e) => {
 
 })
 
+
+cardButton.addEventListener('click', async (e) => {
+  console.log('---> click <---')
+  cardButton.disabled = true
+  const { setupIntent, error } = await stripe.confirmCardSetup(
+      clientSecret, {
+          payment_method: {
+              card: cardElement,
+              billing_details: { name: clientFullName }
+          },
+      }
+  );
+
+  if (error) {
+      // Display "error.message" to the user...
+      cardButton.disable = false
+      console.log(error)
+  } else {
+      // The card has been verified successfully...
+      console.log('---> The card has been verified successfully... <---')
+      console.log(setupIntent)
+ 
+      $.ajax({
+      url: '/checkout',
+      type: 'PUT',
+      data: setupIntent,
+      beforeSend: function(xhr) {
+          xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+      },
+      success: function(response) {
+          console.log('---> success request <---')
+          window.location.reload()
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus, errorThrown);
+      }
+      });
+  }
+});
 

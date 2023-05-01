@@ -27,8 +27,6 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        dump($request->payment_method);
-       // dd($request->payment_method);
         $user = $request->user();
         $paymentMethod = $request->payment_method;
 
@@ -37,8 +35,15 @@ class CheckoutController extends Controller
 
         $user->newSubscription($plan, $plan->stripe_plan)
              ->create($paymentMethod);
+    }
 
-        
-        dump($user->hasPaymentMethod());
+
+    public function update(Request $request)
+    {
+        $user = $request->user();
+
+        $paymentMethod = $request->payment_method;
+
+        $user->updateDefaultPaymentMethod($paymentMethod);
     }
 }

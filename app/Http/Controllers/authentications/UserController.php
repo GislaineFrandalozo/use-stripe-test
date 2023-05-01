@@ -57,7 +57,8 @@ class UserController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        return view('content.pages.pages-account-settings-account', ['user' => $user]);
+        $intent = $user->createSetupIntent();
+        return view('content.pages.pages-account-settings-account', compact('user', 'intent'));
     }
 
     /**
