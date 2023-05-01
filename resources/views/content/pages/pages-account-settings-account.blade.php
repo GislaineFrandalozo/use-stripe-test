@@ -10,6 +10,7 @@ $fullName = $user->name. " " .$user->last_name;
 
 @section('content')
 <h4 class="fw-bold py-3 mb-4">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <span class="text-muted fw-light">Account Settings </span> 
 </h4>
 
@@ -36,7 +37,6 @@ $fullName = $user->name. " " .$user->last_name;
               <input class="form-control" type="text" id="email" name="email" value="{{ $user->email }}" placeholder="{{ $user->email }}" />
             </div>
           <div class="mt-2">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <button data-index-number="{{ $user->id }}" id="user_update" class="btn btn-primary me-2">Save changes</button>
             <button id="logout" class="btn btn-danger me-2">Logout</button>
           </div>
@@ -57,11 +57,11 @@ $fullName = $user->name. " " .$user->last_name;
       </div>
      
     </div>
-    <div class="card-body col-md-4 " id="card-element"></div>
+    <div class="card-body  " id="card-element"></div>
       <div class='col p-3'>
          <form>
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <button id="card-button" class="btn btn-outline-secondary" data-stripe="{{ $STRIPE_KEY }}" data-fullName="{{ $fullName }}" data-secret="{{ $intent->client_secret }}">
+          <button id="card-button" class="btn btn-outline-secondary" data-stripe="{{ $STRIPE_KEY }}" data-fullName="{{ $fullName }}" data-secret="{{ $intent->client_secret }}" >
           Save changes
           </button>
         </form>
@@ -78,7 +78,7 @@ $fullName = $user->name. " " .$user->last_name;
  
 <script>
   const cardButton = document.getElementById('card-button');
-  const STRIPE_KEY = cardButton.dataset.stripe;
+  const STRIPE_KEY = cardButton?.dataset.stripe ? cardButton?.dataset.stripe : "xxxx" ;
   const stripe = Stripe(STRIPE_KEY);
 </script>
 

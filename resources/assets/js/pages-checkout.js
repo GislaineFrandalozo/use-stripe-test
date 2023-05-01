@@ -7,7 +7,6 @@
 
 const elements = stripe.elements();
 const cardElement = elements.create('card');
-const cardButton = document.getElementById('card-button');
 const clientSecret = cardButton.dataset.secret;
 const clientFullName = cardButton.dataset.fullName;
 

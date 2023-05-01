@@ -25,6 +25,7 @@ $route = route('user.edit');
       </div>
     
       <div class="mb-3 p-3 col-md-6">
+      <h5> Full Name</h5> 
       {{ $fullName }}
       </div>
     
