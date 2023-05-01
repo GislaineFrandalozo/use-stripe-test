@@ -2,6 +2,7 @@
 $fullName = $user->name. " " .$user->last_name;
 $STRIPE_KEY = env('STRIPE_KEY');
 $route = route('user.edit');
+$withoutCommonMaster = true;
 @endphp
 
 @extends('layouts/blankLayout')
