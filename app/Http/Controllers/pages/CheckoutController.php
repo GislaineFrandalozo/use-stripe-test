@@ -4,6 +4,7 @@ namespace App\Http\Controllers\pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
@@ -14,6 +15,10 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return view('content.pages.pages-checkout');
+        $user = Auth::user();
+        return view('content.pages.pages-checkout', [
+            'intent' => $user->createSetupIntent(),
+            'user' => $user
+        ]);
     }
 }
