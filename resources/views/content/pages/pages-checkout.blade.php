@@ -29,7 +29,10 @@ $route = route('user.edit');
 
   <hr class="my-0">
     <div class="card">
-    <h3 class="card-header"> Update Payment Method</h3> 
+      <div class="card-header">
+        <h3 class="card-header"> Update Payment Method</h3> 
+        <p>  {{ $plan->name }} ${{ number_format($plan->price, 2) }} </p>
+      </div>
     
       <div class="mb-3 p-3 col-md-6">
         <label for="name" class="form-label">Full Name</label>
@@ -66,17 +69,19 @@ $route = route('user.edit');
  
     cardButton.addEventListener('click', async (e) => {
     console.log('---> click <---')
+    cardButton.disabled = true
     const { setupIntent, error } = await stripe.confirmCardSetup(
         clientSecret, {
             payment_method: {
                 card: cardElement,
                 billing_details: { name: cardHolderName.value }
-            }
+            },
         }
     );
  
     if (error) {
         // Display "error.message" to the user...
+        cardButton.disable = false
         console.log(error)
     } else {
         // The card has been verified successfully...
