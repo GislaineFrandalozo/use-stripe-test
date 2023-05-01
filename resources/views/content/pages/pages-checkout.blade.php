@@ -39,6 +39,7 @@ $route = route('user.edit');
       <div class="card-body " id="card-element"></div>
      
       <div class='col p-3'>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <button id="card-button" class="btn btn-outline-secondary" data-secret="{{ $intent->client_secret }}">
           Assinar
         </button>
@@ -80,6 +81,23 @@ $route = route('user.edit');
     } else {
         // The card has been verified successfully...
         console.log('---> The card has been verified successfully... <---')
+        console.log(setupIntent)
+   
+        $.ajax({
+        url: '/checkout',
+        type: 'POST',
+        data: setupIntent,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+        },
+        success: function(response) {
+           // window.location.reload()
+           console.log('---> success request <---')
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+        });
     }
 });
 </script>

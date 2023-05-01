@@ -21,4 +21,19 @@ class CheckoutController extends Controller
             'user' => $user
         ]);
     }
+
+    public function store(Request $request)
+    {
+        dump($request);
+       // dd($request->payment_method);
+        $user = $request->user();
+        $paymentMethod = $request->paymentMethodId;
+
+        $user->newSubscription('default', 'price_monthly')
+             ->quantity(5)
+             ->create($paymentMethod);
+
+        
+        dump($user->hasPaymentMethod());
+    }
 }

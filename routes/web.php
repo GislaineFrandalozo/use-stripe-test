@@ -26,6 +26,7 @@ Route::post('/auth', $controller_path . '\authentications\AuthController@store')
 Route::post('/auth/logout', $controller_path . '\authentications\AuthController@destroy' )->middleware('auth')->name('auth.destroy');
 
 Route::get('/checkout', $controller_path . '\pages\CheckoutController@index')->middleware('auth')->name('pages-checkout');
+Route::post('/checkout', $controller_path . '\pages\CheckoutController@store')->middleware('auth')->name('checkout.store');
 
 Route::resource('user', $controller_path . '\authentications\UserController')->except([
     'index', 'show', 'edit', 'destroy'
