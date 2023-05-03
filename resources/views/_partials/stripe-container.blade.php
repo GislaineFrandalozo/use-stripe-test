@@ -1,7 +1,5 @@
-<script src="https://js.stripe.com/v3/"></script>
- 
-<script>
-  function cardButtonExist () {
+ <script>
+  function checkCardButtonExist () {
     if(!cardButton){
       cardButton = {
         dataset: {
@@ -12,7 +10,7 @@
     }
   }
   let cardButton = document.getElementById('card-button');
-  cardButtonExist();
+  checkCardButtonExist();
   
   const STRIPE_KEY = cardButton.dataset.stripe;
  

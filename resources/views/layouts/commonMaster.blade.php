@@ -20,6 +20,7 @@
   @include('layouts/sections/styles')
 
   <!-- Include Scripts for customizer, helper, analytics, config -->
+  <script src="https://js.stripe.com/v3/"></script>
   @include('layouts/sections/scriptsIncludes')
 </head>
 

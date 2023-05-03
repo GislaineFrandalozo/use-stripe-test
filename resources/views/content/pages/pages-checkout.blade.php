@@ -11,7 +11,7 @@ $withoutCommonMaster = true;
 
 @section('content')
 
-<h4 class="fw-bold py-3 mb-4">
+<h4 class="fw-bold p-3 mb-2">
   <span class="text-muted fw-light">Checkout</span> 
 </h4>
 
@@ -21,18 +21,18 @@ $withoutCommonMaster = true;
   <hr class="my-0">
     <div class="card">
       <div class="card-header">
-        <h3> Update Payment Method</h3> 
+        <h3> Payment </h3> 
         <p>  {{ $plan->name }} ${{ number_format($plan->price, 2) }} </p>
       </div>
-      <div class="mb-3 p-3 col-md-6">
-        <label for="Name" class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="name" readonly name="name" value="{{ $fullName }}" autofocus>
+      <div class="px-5 col-md-6">
+        <form id="address-form">
+          <div id="address-element"></div>    
+        </form>
       </div>
-
-      <div class="card-body" id="card-element"></div>
-     
-      <div class='col p-3'>
-       
+      <div class="px-4 col-md-6">
+        <div class="card-body" id="card-element"></div>
+      </div>
+      <div class='col px-4'>
         <button id="card-button" class="btn btn-outline-secondary" data-fullname="{{ $fullName }}" data-stripe="{{ $STRIPE_KEY }}" data-secret="{{ $intent->client_secret }}">
           Ok
         </button>

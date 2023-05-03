@@ -18,14 +18,9 @@ async function checkout() {
     try {
 
         cardButton.disabled = true
-
-        const cardVerified = await FormCard.validateCard(form_card.clientSecret, {
-            payment_method: {
-                card: form_card.cardElement,
-                billing_details: { name: form_card.clientFullName }
-            },
-        })
-
+  
+        const cardVerified = await form_card.validateCard()
+        
         Plan.sub(cardVerified);
 
     } catch (error) {

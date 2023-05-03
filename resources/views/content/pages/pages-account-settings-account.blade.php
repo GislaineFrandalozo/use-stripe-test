@@ -9,7 +9,7 @@ $fullName = $user->name. " " .$user->last_name;
 @section('title', 'Account settings - Account')
 
 @section('content')
-<h4 class="fw-bold py-3 mb-4">
+<h4 class="fw-bold p-3 mb-2">
   <span class="text-muted fw-light">Account Settings </span> 
 </h4>
 
@@ -54,9 +54,20 @@ $fullName = $user->name. " " .$user->last_name;
       <span class="text-muted fw-light">Your card is </span> 
       <span class="text-muted fw-light">{{ $user->card_brand }} {{ $user->card_last_four }} </span> 
       </div>
+
+     
+
+
      
     </div>
-    <div class="card-body" id="card-element"></div>
+    <div class="px-5 col-md-6 justify-center">
+        <form id="address-form">
+          <div id="address-element"></div>    
+        </form>
+      </div>
+      <div class="px-5 justify-center col-md-6">
+        <div class="card-body" id="card-element"></div>
+      </div>
       <div class='col p-3'>
          <form>
           <button id="card-button" class="btn btn-outline-secondary" data-stripe="{{ $STRIPE_KEY }}" data-fullName="{{ $fullName }}" data-secret="{{ $intent->client_secret }}" >

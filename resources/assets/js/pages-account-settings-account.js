@@ -22,21 +22,15 @@ if (cardButton.dataset.user !== "not_sub") {
 
   const form_card = new FormCard();
   form_card.mountElement();
-
   cardButton.addEventListener('click', checkout)
 
 
   async function checkout(event) {
     try {
-
+  
       cardButton.disabled = true
 
-      const cardVerified = await FormCard.validateCard(form_card.clientSecret, {
-        payment_method: {
-          card: form_card.cardElement,
-          billing_details: { name: form_card.clientFullName }
-        },
-      })
+      const cardVerified = await form_card.validateCard()
 
       Plan.updateCard(cardVerified);
 
