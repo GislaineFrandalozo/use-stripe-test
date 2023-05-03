@@ -31,7 +31,7 @@
   {{-- remove while creating package --}}
   @if(!isset($withoutCommonMaster))
   <div class="buy-now">
-    <a href="{{ route('pages-checkout') }}" class="btn btn-danger btn-buy-now">Checkout</a>
+    <a href="{{ route('pages-checkout') }}" class="btn btn-danger btn-buy-now">Page Checkout</a>
   </div>
   {{-- remove while creating package end --}}
   @endif

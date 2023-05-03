@@ -1,36 +1,11 @@
+import { Auth } from "./Services/Auth";
+
 /**
  * User Register
  */
 
 'use strict';
 
-document.getElementById("formUserCreate").addEventListener('click', (e) => {
-    e.preventDefault();
+const formRegister = document.getElementById("formUserCreate")
 
-    const name = document.querySelector('#name').value;
-    const last_name = document.querySelector('#last_name').value;
-    const email = document.querySelector('#email').value;
-    const password = document.querySelector('#password').value;
-
-    const formData = {
-        name,
-        last_name,
-        email,
-        password
-    };
-
-    $.ajax({
-        url: '/user',
-        type: 'POST',
-        data: formData,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
-        },
-        success: function (response) {
-            window.location.reload()
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-    });
-});
+formRegister.addEventListener('click', Auth.register);

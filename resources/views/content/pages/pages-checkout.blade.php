@@ -24,18 +24,17 @@ $withoutCommonMaster = true;
         <h3> Update Payment Method</h3> 
         <p>  {{ $plan->name }} ${{ number_format($plan->price, 2) }} </p>
       </div>
-    
       <div class="mb-3 p-3 col-md-6">
-      <h5> Full Name</h5> 
-      {{ $fullName }}
+        <label for="Name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" readonly name="name" value="{{ $fullName }}" autofocus>
       </div>
-    
+
       <div class="card-body" id="card-element"></div>
      
       <div class='col p-3'>
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <button id="card-button" class="btn btn-outline-secondary" data-fullName="{{ $fullName }}" data-stripe="{{ $STRIPE_KEY }}" data-secret="{{ $intent->client_secret }}">
-          Assinar
+       
+        <button id="card-button" class="btn btn-outline-secondary" data-fullname="{{ $fullName }}" data-stripe="{{ $STRIPE_KEY }}" data-secret="{{ $intent->client_secret }}">
+          Ok
         </button>
         <a href="{{ $route }}" class="btn btn-outline-secondary">Cancel</a> 
       </div>
@@ -44,13 +43,7 @@ $withoutCommonMaster = true;
   </div>
 </div>
 
-<script src="https://js.stripe.com/v3/"></script>
- 
-<script>
-  const cardButton = document.getElementById('card-button');
-  const STRIPE_KEY = cardButton.dataset.stripe;
-  const stripe = Stripe(STRIPE_KEY);
-</script>
+@include('_partials/stripe-container')
 
 @endsection
 

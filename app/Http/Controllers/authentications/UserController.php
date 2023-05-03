@@ -80,7 +80,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
         ]);
      
         $user->update([

@@ -1,3 +1,6 @@
+import { FormCard } from "./Components/FormCard";
+import { Plan } from "./Services/Plan";
+
 /**
  * User checkout
  */
@@ -5,44 +8,27 @@
 'use strict';
 
 
-const elements = stripe.elements();
-const cardElement = elements.create('card');
-const clientSecret = cardButton.dataset.secret;
-const clientFullName = cardButton.dataset.fullName;
 
-cardElement.mount('#card-element');
+const form_card = new FormCard();
+form_card.mountElement();
 
-cardButton.addEventListener('click', async (e) => {
+cardButton.addEventListener('click', checkout);
 
-    cardButton.disabled = true
-    const { setupIntent, error } = await stripe.confirmCardSetup(
-        clientSecret, {
-        payment_method: {
-            card: cardElement,
-            billing_details: { name: clientFullName }
-        },
-    }
-    );
+async function checkout() {
+    try {
 
-    if (error) {
-        // Display "error.message" to the user...
+        cardButton.disabled = true
+
+        const cardVerified = await FormCard.validateCard(form_card.clientSecret, {
+            payment_method: {
+                card: form_card.cardElement,
+                billing_details: { name: form_card.clientFullName }
+            },
+        })
+
+        Plan.sub(cardVerified);
+
+    } catch (error) {
         cardButton.disable = false
-        console.log(error)
-    } else {
-        // The card has been verified successfully...
-        $.ajax({
-            url: '/checkout',
-            type: 'POST',
-            data: setupIntent,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
-            },
-            success: function (response) {
-                window.location.reload()
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(textStatus, errorThrown);
-            }
-        });
     }
-});
+}

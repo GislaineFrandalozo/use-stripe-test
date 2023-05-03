@@ -20,27 +20,26 @@ $withoutCommonMaster = true;
   <div class="authentication-wrapper authentication-basic container-p-y">
     <div class="authentication-inner">
       <div class="card">
-        <div class="card-body">        
-          <form id="formAuthentication" class="mb-3">
-            <div class="mb-3">
+        <div class="card-body">    
+
+          <form id="formAuthentication" class="mb-3"  action="{{ route('auth.store') }}" method="POST">
+            
+            <div id='div-email' class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" autofocus>
             </div>
-            <div class="mb-3 form-password-toggle">
-              <div class="d-flex justify-content-between">
-                <label class="form-label" for="password">Password</label>
-              </div>
-              <div class="input-group input-group-merge">
-                <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-              </div>
+
+            <div id='div-password' class="mb-3">  
+              <label class="form-label" for="password">Password</label>          
+              <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
             </div>
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
             <div class="mb-3">
-            <button id='formUserCreate' class="btn btn-primary d-grid w-100">
+            <button type='submit' id='formUserCreate' class="btn btn-primary d-grid w-100">
             Sign in
             </button>
             </div>
+
           </form>
 
           <p class="text-center">
