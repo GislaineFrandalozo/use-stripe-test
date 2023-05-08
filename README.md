@@ -1,64 +1,57 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Stripe teste
+- Acesse seu painel na [stripe](https://dashboard.stripe.com/login).
+<aside>
+⚠️ Os passos a seguir presupoem que você já tenha o ambiente para desenvolvimento com framework laravel usando banco de dados mysql configurado e yarn instalado em sua maquina.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+</aside>
 
-## About Laravel
+## Instalação e configuração
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Instalação
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Faça o donwload ou clone do projeto em [https://github.com/GislaineFrandalozo/use-stripe-test](https://github.com/GislaineFrandalozo/use-stripe-test)
+    - `$ git clone https://github.com/GislaineFrandalozo/use-stripe-test.git`
+- Vá até a raiz do projeto e rode:
+    - `$ composer install`
+    - `$ yarn`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Configuração
 
-## Learning Laravel
+- Na raiz do projeto digite:
+    - `$ cp .env.example .env`
+    - `$ php artisan key:generate`
+    - Edite o arquivo .env:
+        
+         Adicionar as variaveis do stripe STRIPE_KEY e STRIPE_SECRET, procure no painel do stripe por suas variaveis:
+        
+        ![image](https://user-images.githubusercontent.com/86322789/236731010-d29d756b-8781-4022-b0ea-e81b170e7fdd.png)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+        
+    - Atualizar as cofigurações do banco de dados:
+        - DB_DATABASE=
+        - DB_USERNAME=
+        - DB_PASSWORD=
+- No painel stripe procure por “produtos” e adione um novo plano. Atualize o arquivo use-stripe-test/database/seeders/PlanSeeder com as coonfigurações do seu plano.
+    - A coluna 'stripe_plan' estara disponivel em “ID DA API”
+        
+        ![image](https://user-images.githubusercontent.com/86322789/236731075-c6561f48-4dbd-4322-8942-19ab58a08651.png)
+        
+- Digite no terminal na raiz do projeto `$ php artisan migrate --seed`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Iniciando o projeto
 
-## Laravel Sponsors
+- Para iniciar o projeto digite no terminal na raiz do projeto:
+- `$ yarn dev`
+- `$ php artisan serve`
+- Vá até [http://127.0.0.1:8000/](http://127.0.0.1:8000/) em seu navegador e aparecerá a página de login do projeto.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Testando
 
-### Premium Partners
+- Realize um cadastro na plataforma (nome, sobrenome, email e senha).
+- A pagina de perfil é a principal, botão de checkout aparecerá apenas se o usuario não tenha realizado assinatura ainda.
+- Na pagina de perfil é possivel o usuario visualizar e editar seus dados. Também é possivel desconectar da conta a partir dessa pagina.
+- Caso usuario não possua assinatura apenas infromações sobre perfil e botão de checkout irão aparecer, mas caso usuario tenha assinatura o botão some e é possivel visualizar e editar infromações sobre pagamento.
+- Para testar **atualização** do cartão complete os campos do formulario do endereço e cartão com um numero válido (visa ou mastercard), validade qualquer data nao vencida, cvc qualquer numero e cp qualquer valor. Verefique numeros de cartão validos em [https://stripe.com/docs/testing#cards](https://stripe.com/docs/testing#cards) .
+- Para **realizar a assinatura** clique no botão “checkout” complete os campos do formulario endereço e do cartão, um numero válido visa ou mastercard, validade qualquer data nao vencido, cvc qualquer numero e cp qualquer valor. Verefique numeros de cartão validos em [https://stripe.com/docs/testing#cards](https://stripe.com/docs/testing#cards) . Após clicar em assinar aguarde até ser redirecionado para pagina de perfil.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
